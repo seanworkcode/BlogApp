@@ -25,6 +25,11 @@ var ArticleSchema = new Schema({
     required: true,
     trim: true
   },
+  published: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

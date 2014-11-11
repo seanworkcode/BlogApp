@@ -4,3 +4,6 @@ h1 {
 ul.articles li:not(:last-child) {
 	border-bottom: 1px solid #ccc
 }
+.article-block {
+    margin-bottom: 60px;
+}

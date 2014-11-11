@@ -1,6 +1,6 @@
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
+<section data-ng-controller="ArticlesController" data-ng-init="find(currentUser)">
   <ul class="articles unstyled">
-    <li data-ng-repeat="article in articles">
+    <li data-ng-repeat="article in articles" class="article-block">
       <span>{{article.created | date:'medium'}}</span> /
       <span>{{article.user.name}}</span>
       <h2>
@@ -11,6 +11,9 @@
           </a>
           <a class="btn" data-ng-click="remove(article);">
             <i class="glyphicon glyphicon-trash"></i>
+          </a>
+          <a class="btn" data-ng-click="publish(article);">
+            <i ng-class="article.published ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'"></i>
           </a>
         </span>
       </h2>

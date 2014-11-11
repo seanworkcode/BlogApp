@@ -3,6 +3,7 @@
 angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles',
   function($scope, $stateParams, $location, Global, Articles) {
     $scope.global = Global;
+    $scope.currentUser = $scope.global.user;
 
     $scope.hasAuthorization = function(article) {
       if (!article || !article.user) return false;
@@ -34,12 +35,9 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
               $scope.articles.splice(i, 1);
             }
           }
-          $location.path('articles');
         });
       } else {
-        $scope.article.$remove(function(response) {
-          $location.path('articles');
-        });
+        $scope.article.$remove();
       }
     };
 
@@ -59,9 +57,18 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
       }
     };
 
-    $scope.find = function() {
+    $scope.publish = function(article) {
+      if (article) {
+        article.published = !article.published;
+        article.$update();
+      }
+    };
+
+    $scope.find = function(user) {
       Articles.query(function(articles) {
-        $scope.articles = articles;
+        $scope.articles = user ? articles.filter(function(article) {
+          return article.user._id === user._id;
+        }) : articles;
       });
     };
 
